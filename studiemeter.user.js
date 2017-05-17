@@ -50,6 +50,7 @@ window.onhashchange = function(){
                     }
                     if (i == GetQuestionNumber()){
                         $("button:not(.ng-hide)[ng-click='submitClick()']").click();
+                        $("button:not(.ng-hide)[ng-click='confirm()']").click();
                     }
                 }, 1000 * i);
             }
