@@ -38,6 +38,11 @@ function Getplaceholder(){
     return placeholder[1];
 }
 
+function GetNumber(){
+    var questionnumber = $(".questionnumber").html().replace(/ /g,'').replace(/(\r\n|\n|\r)/gm,"").split("&nbsp;van&nbsp;");
+    return questionnumber[1];
+}
+
 window.onhashchange = function(){
     var parameter = GetURLParameter("exerciseId");
     if(parameter !== null){
