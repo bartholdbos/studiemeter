@@ -1,12 +1,11 @@
 // ==UserScript==
-// @name         Studiemeter
-// @namespace    http://tampermonkey.net/
-// @version      0.1
-// @description  try to take over the world!
-// @author       You
-// @match        https://www.studiemeter.nl/*
-// @grant        none
-// @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.js
+// @name          Studiemeter
+// @namespace     https://github.com/bartholdbos/studiemeter
+// @description   Studiemeter script
+// @version       0.1
+// @match         https://www.studiemeter.nl/*
+// @require       http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.js
+// @downloadURL   https://github.com/bartholdbos/studiemeter/raw/master/studiemeter.user.js
 // ==/UserScript==
 
 function GetURLParameter(sParam){
@@ -33,25 +32,23 @@ function MakeQuestion(){
     });
 }
 
-function Getplaceholder(){
-    var placeholder = $(".exercise-input-element").attr("placeholder").split(' / ');
-    return placeholder[1];
-}
-
-function GetNumber(){
+function GetQuestionNumber(){
     var questionnumber = $(".questionnumber").html().replace(/ /g,'').replace(/(\r\n|\n|\r)/gm,"").split("&nbsp;van&nbsp;");
     return parseInt(questionnumber[1]);
 }
-// $("button:not(.ng-hide)[ng-click='submitClick()']").click(); // voor inleveren
+
 window.onhashchange = function(){
     var parameter = GetURLParameter("exerciseId");
     if(parameter !== null){
         $(".navbar-header.pull-left").append(parameter);
-        for (i = 0; i < 10; i++) {
-            setTimeout(function() {
-                MakeQuestion();
-                $("button:not(.ng-hide)[ng-click='nextQuestionConditional()']").click();
-            }, 3000 + 1000 * i);
-        }
+        setTimeout(function() {
+            for (i = 0; i < GetQuestionNumber(); i++) {
+                setTimeout(function() {
+                    MakeQuestion();
+                    $("button:not(.ng-hide)[ng-click='nextQuestionConditional()']").click();
+                    $("button:not(.ng-hide)[ng-click='submitClick()']").click();
+                }, 1000 * i);
+            }
+        }, 3000);
     }
 };
