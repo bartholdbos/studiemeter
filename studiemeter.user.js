@@ -45,8 +45,12 @@ window.onhashchange = function(){
             for (i = 0; i < GetQuestionNumber(); i++) {
                 setTimeout(function() {
                     MakeQuestion();
-                    $("button:not(.ng-hide)[ng-click='nextQuestionConditional()']").click();
-                    $("button:not(.ng-hide)[ng-click='submitClick()']").click();
+                    if (i < GetQuestionNumber()){
+                        $("button:not(.ng-hide)[ng-click='nextQuestionConditional()']").click();
+                    }
+                    if (i == GetQuestionNumber()){
+                        $("button:not(.ng-hide)[ng-click='submitClick()']").click();
+                    }
                 }, 1000 * i);
             }
         }, 3000);
